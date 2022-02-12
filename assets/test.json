@@ -1,0 +1,8 @@
+{
+  "name": "John Doe",
+  "age": 18,
+  "address": {
+    "country": "china",
+    "zip-code": "10000"
+  }
+}
