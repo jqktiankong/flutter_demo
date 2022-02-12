@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
               width: double.infinity,
               height: 50,
             ),
-            TextWidget(),
-            CheckboxWidget(),
+            ParentWidget(),
           ],
         ),
       ),
@@ -26,31 +25,46 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class TextWidget extends StatefulWidget {
-  const TextWidget({Key? key}) : super(key: key);
+class ParentWidget extends StatefulWidget {
+  const ParentWidget({Key? key}) : super(key: key);
 
   @override
-  _TextWidgetState createState() {
-    return _TextWidgetState();
+  State<StatefulWidget> createState() {
+    return _ParentWidgetState();
   }
 }
 
-class _TextWidgetState extends State<TextWidget> {
-  var isChecked = true;
-  var count = 41;
+class _ParentWidgetState extends State<ParentWidget> {
+  var isChecked = false;
+  var count = 0;
+
+  void _check(bool value) {
+    setState(() {
+      isChecked = value;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    var c = isChecked ? count : (count - 1);
-
-    return Text(
-      '$c',
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(isChecked ? '选中' : '未选中'),
+        CheckboxWidget(onChanged: (bool value) {
+          _check(value);
+        }),
+      ],
     );
   }
 }
 
 class CheckboxWidget extends StatefulWidget {
-  const CheckboxWidget({Key? key}) : super(key: key);
+  const CheckboxWidget({
+    Key? key,
+    required this.onChanged,
+  }) : super(key: key);
+
+  final ValueChanged<bool> onChanged;
 
   @override
   State<StatefulWidget> createState() {
@@ -59,7 +73,11 @@ class CheckboxWidget extends StatefulWidget {
 }
 
 class _CheckboxWidgetState extends State<CheckboxWidget> {
-  bool isChecked = false;
+  var isChecked = false;
+
+  void _handleTap() {
+    widget.onChanged(isChecked);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +100,8 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         onChanged: (bool? value) {
           setState(() {
             isChecked = value!;
+
+            _handleTap();
           });
         });
   }
