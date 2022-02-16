@@ -60,6 +60,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/lake.jpg
+    - images/flippers-alpha.png
+    - images/beachball-alpha.png
+    - images/binoculars-alpha.png
+    - images/chair-alpha.png
     - assets/test.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
